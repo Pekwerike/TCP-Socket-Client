@@ -7,27 +7,10 @@ public class MainApplication {
     public static void main(String[] args) throws IOException {
         Socket server = new Socket("192.168.43.190", 8085);
         System.out.println("Connected to server");
-        InputStream serverIS = server.getInputStream();
-        BufferedInputStream serverBIS = new BufferedInputStream(serverIS);
-        DataInputStream serverDIS = new DataInputStream(serverBIS);
-        //receiveImage(server);
-        int n = serverDIS.readInt();
-        int[] imageLengths = new int[n];
 
-        for (int i = 0; i < n; i++) {
-            imageLengths[i] = (int) serverDIS.readLong();
-            System.out.println(imageLengths[i]);
-        }
+        VideosMovement videosMovement = new VideosMovement();
+        videosMovement.receiveVideo(server);
 
-        for (int i = 0; i < n; i++) {
-            FileOutputStream receivedImageOS = new FileOutputStream(createFile());
-            byte[] buffer = new byte[imageLengths[i]];
-            int readByte = serverDIS.read(buffer, 0, imageLengths[i]);
-            receivedImageOS.write(buffer);
-
-            receivedImageOS.close();
-        }
-        serverIS.close();
     }
 
 

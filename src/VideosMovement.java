@@ -1,7 +1,4 @@
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.Socket;
 
 public class VideosMovement {
@@ -14,12 +11,28 @@ public class VideosMovement {
         // read the number of video file sent
         int totalFiles = serverDIS.readInt();
 
-        long[] videosSize = new long[totalFiles];
+        int[] videosSize = new int[totalFiles];
         String[] videosName = new String[totalFiles];
 
-        // read the names and length for each file
-        for(int i = 0; i < totalFiles; i++){
-
+        // read the names and length for each video
+        for (int i = 0; i < totalFiles; i++) {
+            videosSize[i] = (int) serverDIS.readLong();
+            videosName[i] = serverDIS.readUTF();
         }
+
+        // read the bytes for each video
+        for (int i = 0; i < totalFiles; i++) {
+            byte[] buffer = new byte[videosSize[i]];
+            serverDIS.read(buffer, 0, videosSize[i]);
+            FileOutputStream receivedVideo = new FileOutputStream(createFile(videosName[i]));
+            receivedVideo.write(buffer);
+            receivedVideo.close();
+        }
+        System.out.println(String.format("%d videos received", totalFiles));
+
+    }
+
+    private static File createFile(String videoName) {
+        return new File("C:\\Users\\Prosper's PC\\Pictures\\" + videoName + ".mp4");
     }
 }
