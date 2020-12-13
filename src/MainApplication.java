@@ -19,7 +19,7 @@ public class MainApplication {
             System.out.println(imageLengths[i]);
         }
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < n; i++) {
             FileOutputStream receivedImageOS = new FileOutputStream(createFile());
             byte[] buffer = new byte[imageLengths[i]];
             int readByte = serverDIS.read(buffer, 0, imageLengths[i]);
@@ -30,25 +30,8 @@ public class MainApplication {
         serverIS.close();
     }
 
-    private static void receiveImage(DataInputStream serverDIS,
-                                     InputStream serverIS
-    ) throws IOException {
-        // receive image from server
-        FileOutputStream receivedImageOS = new FileOutputStream(createFile());
-        int imageLength = (int) serverDIS.readLong();
-        byte[] buffer = new byte[imageLength];
-
-        while (serverDIS.read(buffer, 0, (int) imageLength) != -1) {
-            receivedImageOS.write(buffer, 0, (int) imageLength);
-        }
-
-        //receivedImageOS.write(buffer);
-        receivedImageOS.close();
-        serverIS.close();
-        System.out.println("Process completed");
-    }
 
     private static File createFile() {
-        return new File("C:\\Users\\Prosper's PC\\Pictures\\new" + System.currentTimeMillis() + ".png");
+        return new File("C:\\Users\\Prosper's PC\\Pictures\\new" + System.currentTimeMillis() + ".jpg");
     }
 }
