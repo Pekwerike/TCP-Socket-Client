@@ -19,9 +19,9 @@ public class MainApplication {
 
             File video1 = getVideoFile("148 Introduction to the DOM");
             File video2 = getVideoFile("149 Defining the DOM");
-            File video3 = getVideoFile("157 Manipulating Attributes");
+            File video3 = getVideoFile("150 Select and Manipulate");
             File video4 = getVideoFile("152 Important Selector Methods");
-            File[] videoCollection = { video2, video3, video4};
+            File[] videoCollection = { video2, video1, video3, video4};
 
             try {
                // videosMovement.transferVideo(videoCollection,server);
@@ -29,7 +29,6 @@ public class MainApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         };
         Thread thread = new Thread(runnable);
         thread.start();
